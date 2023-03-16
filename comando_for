@@ -1,0 +1,32 @@
+file = 'C:/Users/User/Desktop/Python-para-Engenheiros-e-Cientistas-main/Notebooks/arquivos_auxiliares/PIB_100_maiores_cidades_2017.txt'
+
+with open(file) as f:
+    f_data = f.readlines() # lê o arquivo e retorna uma lista onde cada elemento é uma linha do arquivo
+    f.closed
+
+linhas = []
+for i in range(len(f_data)):
+    linhas.append(f_data[i].split(','))
+    
+# criando um dicionário em que os valores da chave é uma lista dos elementos da base
+colunas_dict = {}
+for key in linhas[0]:
+    colunas_dict[key] = []
+    
+    # criando um indice para a coluna
+    coluna_n = linhas[0].index(key)
+    
+    # fazendo uma conexão entre linhas e colunas
+    for i in range(1,len(linhas)):
+        colunas_dict[key].append(linhas[i][coluna_n]) # a partir do momento que se colunas_dict[key] já não é mais um dicionario e sim uma lista
+
+lista_estados = colunas_dict['Estado']
+numero_municipios_sp = lista_estados.count('SP')
+print('Quantos municípios estão no estado de São Paulo? \n A quantidade de municípios no estado de São Paulo é:',numero_municipios_sp)
+
+pib_acm_sp = 0
+
+for i in range(len(colunas_dict['Estado'])):
+    if colunas_dict['Estado'][i] == 'SP':
+        pib_acm_sp += float(colunas_dict['Participação (%)'][i])
+print('\nQual a participação acumulada desses municípios? \n A participação acumulada desses municípios é:',pib_acm_sp)
